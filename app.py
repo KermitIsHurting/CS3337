@@ -83,5 +83,29 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
+@app.route('/vehicles', methods=['GET', 'POST'])
+def manage_vehicles():
+   
+    user = User.query.first()
+    
+    if request.method == 'POST':
+        make = request.form['make']
+        model = request.form['model']
+        year = request.form['year']
+        vehicle_id = request.form.get('vehicle_id')
+        if vehicle_id:
+            vehicle = Vehicle.query.get(vehicle_id)
+            vehicle.make = make
+            vehicle.model = model
+            vehicle.year = year
+        else:
+            new_vehicle = Vehicle(make=make, model=model, year=year, owner=user)
+            db.session.add(new_vehicle)
+        db.session.commit()
+        flash("Vehicle information updated!", "success")
+        return redirect(url_for('manage_vehicles'))
+    return render_template('manage_vehicles.html', user=user)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
