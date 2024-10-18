@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Vehicles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Manage Vehicles</h1>
+    <form method="POST" action="{{ url_for('manage_vehicles') }}">
+        <label for="make">Make:</label>
+        <input type="text" id="make" name="make" required>
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" required>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required>
+        <input type="hidden" id="vehicle_id" name="vehicle_id">
+        <button type="submit">Save Vehicle</button>
+    </form>
+    <ul>
+        {% for vehicle in user.vehicles %}
+        <li>
+            {{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
+            <button onclick="editVehicle('{{ vehicle.id }}', '{{ vehicle.make }}', '{{ vehicle.model }}', '{{ vehicle.year }}')">Edit</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('home') }}">Back to Parking</a>
+    <script>
+        function editVehicle(id, make, model, year) {
+            document.getElementById('make').value = make;
+            document.getElementById('model').value = model;
+            document.getElementById('year').value = year;
+            document.getElementById('vehicle_id').value = id;
+        }
+    </script>
+</body>
+</html>
