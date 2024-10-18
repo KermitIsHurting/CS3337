@@ -7,7 +7,7 @@ Clone the repository
 Create a Virtual Environment
 terminal command: python3 -m venv venv
 terminal command: source venv/bin/active
-# on windows use venv\Scripts\activate
+on windows use venv\Scripts\activate
 
 Install the required packages:
 terminal command: pip install -r requirements.txt
